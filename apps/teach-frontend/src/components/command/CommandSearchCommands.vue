@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { filteredCommands } from './searchCommands'
-import { closeCommandModal } from './commandModal'
+import { useCommandModel } from './commandModal'
 import { useGoto } from '@/composables'
+
+const { closeCommandModal } = useCommandModel()
 
 const goto = useGoto()
 

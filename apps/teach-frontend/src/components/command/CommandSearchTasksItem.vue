@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { NCheckbox, NEllipsis } from 'naive-ui'
-import { closeCommandModal } from './commandModal'
+import { useCommandModel } from './commandModal'
+
 import type { TasksSelector } from '@/store'
 import { useTasksSelectorStore, useTasksStore } from '@/store'
 
@@ -11,6 +12,8 @@ const props = defineProps<{
   from: TasksSelector | undefined
   id: string
 }>()
+
+const { closeCommandModal } = useCommandModel()
 
 const tasksStore = useTasksStore()
 const tasksSelectorStore = useTasksSelectorStore()

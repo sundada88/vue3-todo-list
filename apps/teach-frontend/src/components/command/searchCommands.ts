@@ -12,14 +12,14 @@ export const commands: Command[] = [
     id: 0,
     name: '切换皮肤',
     execute: (goto) => {
-      goto.gotoSettingsTheme()
+      goto.goToSettings()
     },
   },
   {
     id: 1,
     name: '前往主页',
     execute: (goto) => {
-      goto.gotoHome()
+      goto.goToHome()
     },
   },
 ]

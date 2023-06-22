@@ -3,7 +3,8 @@ import { NModal } from 'naive-ui'
 import { watch } from 'vue'
 import { resetSearch } from './search'
 import CommandBody from './CommandModalBody.vue'
-import { registerKeyboardShortcut, showCommandModal } from './commandModal'
+import { useCommandModel } from './commandModal'
+const { registerKeyboardShortcut, showCommandModal } = useCommandModel()
 
 registerKeyboardShortcut()
 
