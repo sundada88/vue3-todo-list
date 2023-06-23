@@ -1,8 +1,10 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useCommandModel } from '../commandModal'
 import { useSetup } from '@/tests/helper'
 const { showCommandModal, openCommandModal, closeCommandModal, registerKeyboardShortcut } = useCommandModel()
+
+vi.mock('@/composables/misc')
 
 describe('test open command', () => {
   beforeEach(() => {
@@ -17,9 +19,29 @@ describe('test open command', () => {
     expect(showCommandModal.value).toBe(false)
   })
   // TODO: 模拟键盘事件
-  it('should has short cut', () => {
-    useSetup(() => {
-      registerKeyboardShortcut()
+  describe('test short cut', () => {
+    beforeEach(() => {
+      closeCommandModal()
+      useSetup(() => {
+        registerKeyboardShortcut()
+      })
+    })
+
+    it('Command + k should triggher mac short cut', () => {
+      const event = new KeyboardEvent('keydown', {
+        key: 'k',
+        metaKey: true,
+      })
+      window.dispatchEvent(event)
+      expect(showCommandModal.value).toBe(true)
+    })
+    it('Command + k should triggher mac short cut', () => {
+      const event = new KeyboardEvent('keydown', {
+        key: 'k',
+        ctrlKey: true,
+      })
+      window.dispatchEvent(event)
+      expect(showCommandModal.value).toBe(false)
     })
   })
 })
