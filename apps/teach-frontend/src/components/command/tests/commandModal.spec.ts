@@ -1,10 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { computed } from 'vue'
 import { useCommandModel } from '../commandModal'
 import { useSetup } from '@/tests/helper'
+import * as useMisc from '@/composables/misc'
 const { showCommandModal, openCommandModal, closeCommandModal, registerKeyboardShortcut } = useCommandModel()
 
-vi.mock('@/composables/misc')
+// vi.mock('@/composables/misc')
 
 describe('test open command', () => {
   beforeEach(() => {
@@ -19,15 +21,12 @@ describe('test open command', () => {
     expect(showCommandModal.value).toBe(false)
   })
   // TODO: 模拟键盘事件
-  describe('test short cut', () => {
-    beforeEach(() => {
-      closeCommandModal()
+  describe('test short cut in mac/window', () => {
+    it('Command + k should triggher mac short cut', () => {
+      vi.spyOn(useMisc, 'useIsMac').mockImplementation(() => computed(() => true))
       useSetup(() => {
         registerKeyboardShortcut()
       })
-    })
-
-    it('Command + k should triggher mac short cut', () => {
       const event = new KeyboardEvent('keydown', {
         key: 'k',
         metaKey: true,
@@ -35,13 +34,18 @@ describe('test open command', () => {
       window.dispatchEvent(event)
       expect(showCommandModal.value).toBe(true)
     })
-    it('Command + k should triggher mac short cut', () => {
+
+    it('Control + k should triggher windows short cut', () => {
+      vi.spyOn(useMisc, 'useIsMac').mockImplementation(() => computed(() => false))
+      useSetup(() => {
+        registerKeyboardShortcut()
+      })
       const event = new KeyboardEvent('keydown', {
         key: 'k',
         ctrlKey: true,
       })
       window.dispatchEvent(event)
-      expect(showCommandModal.value).toBe(false)
+      expect(showCommandModal.value).toBe(true)
     })
   })
 })
