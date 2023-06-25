@@ -2,7 +2,7 @@
 import { NSpace } from 'naive-ui'
 import { useGoto } from '@/composables'
 
-const { gotoHome } = useGoto()
+const { goToHome } = useGoto()
 </script>
 
 <template>
