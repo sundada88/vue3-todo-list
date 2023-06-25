@@ -15,7 +15,7 @@ const { goToHome } = useGoto()
             w-100px h-40px rounded-md bg-blue-500 text-white text-16px
             hover:bg-blue-400 active:bg-blue-700 transition-colors
           "
-      @click="() => gotoHome()"
+      @click="() => goToHome()"
     >
       完成
     </button>
